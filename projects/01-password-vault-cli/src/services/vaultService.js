@@ -31,7 +31,16 @@ function getCredentials(website) {
     password: decrypt(credential.password),
   };
 }
+function deleteCredential(website) {
+  const credential = repository.findByWebsite(website);
+  if (!credential) {
+    throw new Error("Website not found ");
+  }
+  const result = repository.deleteCredentials(website);
+  return result.changes > 0;
+}
 module.exports = {
   addCredentials,
   getCredentials,
+  deleteCredential,
 };

@@ -23,7 +23,18 @@ function deleteCredentials(website) {
         DELETE FROM vault WHERE website=?`);
   return stmt.run(website);
 }
+
+function getAllCredentials() {
+  const stmt = db.prepare(`
+        SELECT *
+        FROM vault
+    `);
+
+  return stmt.all();
+}
 module.exports = {
   findByWebsite,
   insertCredential,
+  deleteCredentials,
+  getAllCredentials,
 };
