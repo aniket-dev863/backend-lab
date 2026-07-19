@@ -47,10 +47,19 @@ function getAllCredential() {
 function searchCredential(query) {
   return repository.searchCredential(query);
 }
+
+function updateCredentials(website, username, password) {
+  const encryptedPassword = encrypt(password);
+  repository.updateCredentials(username, encryptedPassword, website);
+  return {
+    success: true,
+  };
+}
 module.exports = {
   addCredentials,
   getCredentials,
   deleteCredential,
   getAllCredential,
   searchCredential,
+  updateCredentials,
 };

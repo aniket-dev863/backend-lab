@@ -42,10 +42,22 @@ function searchCredential(query) {
 
   return stmt.all(`%${query}%`);
 }
+
+function updateCredentials(username, password, website) {
+  const stmt = db.prepare(`
+    UPDATE vault
+    SET username = ?,
+        password = ?
+    WHERE website = ?
+`);
+
+  return stmt.run(username, password, website);
+}
 module.exports = {
   findByWebsite,
   insertCredential,
   deleteCredentials,
   getAllCredentials,
   searchCredential,
+  updateCredentials,
 };
