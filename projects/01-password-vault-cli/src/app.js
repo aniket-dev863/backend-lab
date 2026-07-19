@@ -2,12 +2,16 @@ const add = require("./commands/add");
 const remove = require("./commands/delete");
 const show = require("./commands/show");
 const list = require("./commands/list");
+const search = require("./commands/search");
+const update = require("./commands/update");
 
 const commands = {
   add,
   delete: remove,
   show,
   list,
+  search,
+  update,
 };
 
 async function run(command) {
