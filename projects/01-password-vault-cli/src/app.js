@@ -4,6 +4,7 @@ const show = require("./commands/show");
 const list = require("./commands/list");
 const search = require("./commands/search");
 const update = require("./commands/update");
+const generate = require("./commands/generate");
 
 const commands = {
   add,
@@ -12,6 +13,7 @@ const commands = {
   list,
   search,
   update,
+  generate,
 };
 
 async function run(command) {

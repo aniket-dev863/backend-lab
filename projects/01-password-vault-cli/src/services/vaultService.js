@@ -2,6 +2,8 @@ const db = require("../database/db");
 const repository = require("../database/vaultRepository");
 const encrypt = require("../crypto/encrypt");
 const decrypt = require("../crypto/decrypt");
+const crypto = require("crypto");
+
 function addCredentials({ website, username, password }) {
   if (!website || !username || !password) {
     throw new Error("All feilds are required ");
@@ -55,6 +57,22 @@ function updateCredentials(website, username, password) {
     success: true,
   };
 }
+
+function generatePassword(length) {
+  const chars =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*";
+  const randomBytes = crypto.randomBytes(length);
+  let password = "";
+  for (let nums of randomBytes) {
+    password += chars[nums % chars.length];
+  }
+  if (password.length === length) return password;
+  else {
+    throw new Error("Not able to generate password ");
+    return;
+  }
+}
+
 module.exports = {
   addCredentials,
   getCredentials,
@@ -62,4 +80,5 @@ module.exports = {
   getAllCredential,
   searchCredential,
   updateCredentials,
+  generatePassword,
 };
