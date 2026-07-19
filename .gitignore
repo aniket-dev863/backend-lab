@@ -19,12 +19,13 @@ npm-debug.log*
 yarn-debug.log*
 pnpm-debug.log*
 
-# ==========================
-# Database Files
-# ==========================
-*.db
-*.sqlite
-*.sqlite3
+# Ignore generated database files
+data/*.db
+data/*.sqlite
+data/*.sqlite3
+
+# Keep the folder in Git
+!data/.gitkeep
 
 # ==========================
 # Runtime Files
