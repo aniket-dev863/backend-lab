@@ -39,8 +39,13 @@ function deleteCredential(website) {
   const result = repository.deleteCredentials(website);
   return result.changes > 0;
 }
+
+function getAllCredential() {
+  return repository.getAllCredentials();
+}
 module.exports = {
   addCredentials,
   getCredentials,
   deleteCredential,
+  getAllCredential,
 };
