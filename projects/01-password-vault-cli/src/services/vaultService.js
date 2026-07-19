@@ -43,9 +43,14 @@ function deleteCredential(website) {
 function getAllCredential() {
   return repository.getAllCredentials();
 }
+
+function searchCredential(query) {
+  return repository.searchCredential(query);
+}
 module.exports = {
   addCredentials,
   getCredentials,
   deleteCredential,
   getAllCredential,
+  searchCredential,
 };

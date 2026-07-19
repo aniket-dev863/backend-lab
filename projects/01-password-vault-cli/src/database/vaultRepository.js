@@ -32,9 +32,20 @@ function getAllCredentials() {
 
   return stmt.all();
 }
+
+function searchCredential(query) {
+  const stmt = db.prepare(`
+    SELECT *
+    FROM vault
+    WHERE website LIKE ?
+`);
+
+  return stmt.all(`%${query}%`);
+}
 module.exports = {
   findByWebsite,
   insertCredential,
   deleteCredentials,
   getAllCredentials,
+  searchCredential,
 };
