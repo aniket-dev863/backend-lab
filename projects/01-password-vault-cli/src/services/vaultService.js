@@ -1,6 +1,7 @@
 const db = require("../database/db");
 const repository = require("../database/vaultRepository");
 const encrypt = require("../crypto/encrypt");
+const decrypt = require("../crypto/decrypt");
 function addCredentials({ website, username, password }) {
   if (!website || !username || !password) {
     throw new Error("All feilds are required ");
@@ -18,6 +19,19 @@ function addCredentials({ website, username, password }) {
   return { success: true };
 }
 
+function getCredentials(website) {
+  const credential = repository.findByWebsite(website);
+  if (!credential) {
+    throw new Error("Website Credentials not Found \n");
+  }
+
+  return {
+    website: credential.website,
+    username: credential.username,
+    password: decrypt(credential.password),
+  };
+}
 module.exports = {
   addCredentials,
+  getCredentials,
 };

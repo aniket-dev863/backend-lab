@@ -18,7 +18,11 @@ function insertCredential(website, username, password) {
 
   stmt.run(website, username, password);
 }
-
+function deleteCredentials(website) {
+  const stmt = db.prepare(`
+        DELETE FROM vault WHERE website=?`);
+  return stmt.run(website);
+}
 module.exports = {
   findByWebsite,
   insertCredential,
