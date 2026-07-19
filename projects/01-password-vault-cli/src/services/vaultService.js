@@ -72,7 +72,33 @@ function generatePassword(length) {
     return;
   }
 }
+function checkStrength(password) {
+  let pnts = 0;
+  String(password);
+  if (password.length >= 12) pnts += 1;
+  if (/[A-Z]/.test(password)) pnts += 1;
+  if (/[a-z]/.test(password)) pnts += 1;
+  if (/[0-9]/.test(password)) pnts += 1;
+  if (/[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(password)) pnts += 1;
 
+  let strength;
+  if (pnts <= 2) strength = "Weak";
+  else if (pnts <= 4 && pnts >= 2) strength = "Medium";
+  else strength = "Strong";
+
+  return {
+    score: pnts,
+    stren: strength,
+
+    checks: {
+      uppercase: /[A-Z]/.test(password),
+      lowercase: /[a-z]/.test(password),
+      digit: /[0-9-Z]/.test(password),
+      special: /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(password),
+      len: password.length,
+    },
+  };
+}
 module.exports = {
   addCredentials,
   getCredentials,
@@ -81,4 +107,5 @@ module.exports = {
   searchCredential,
   updateCredentials,
   generatePassword,
+  checkStrength,
 };

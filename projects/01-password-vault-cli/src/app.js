@@ -5,7 +5,7 @@ const list = require("./commands/list");
 const search = require("./commands/search");
 const update = require("./commands/update");
 const generate = require("./commands/generate");
-
+const strength = require("./commands/strength");
 const commands = {
   add,
   delete: remove,
@@ -14,6 +14,7 @@ const commands = {
   search,
   update,
   generate,
+  strength,
 };
 
 async function run(command) {
