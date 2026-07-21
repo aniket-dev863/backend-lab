@@ -1,8 +1,10 @@
 const vaultService = require("../services/vaultService");
 const { ask, close } = require("../utils/prompt");
+const unlockVault = require("../utils/unlockVault");
 
 async function searchCredential() {
   try {
+    await unlockVault();
     let query = process.argv[3];
     if (!query) {
       let query = await ask("Enter website name to search : ");

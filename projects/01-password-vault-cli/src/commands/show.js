@@ -1,7 +1,10 @@
 const vaultService = require("../services/vaultService");
 const { ask, close } = require("../utils/prompt");
+const unlockVault = require("../utils/unlockVault");
+
 async function show() {
   try {
+    await unlockVault();
     const website = await ask("Website: ");
     const credential = vaultService.getCredentials(website);
     console.log("\n================");

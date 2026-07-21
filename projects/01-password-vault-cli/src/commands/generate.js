@@ -1,8 +1,9 @@
 const vaultService = require("../services/vaultService");
 const { ask, close } = require("../utils/prompt");
-
+const unlockVault = require("../utils/unlockVault");
 async function generatePassword() {
   try {
+    await unlockVault();
     let length = process.argv[3];
     if (!length) {
       length = await ask("Length of Required Password : ");

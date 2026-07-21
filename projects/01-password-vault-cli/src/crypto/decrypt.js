@@ -1,15 +1,21 @@
 const crypto = require("crypto");
 
-const { SECRET_KEY, ALGORITHM } = require("../config/constants");
+const { getSessionKey } = require("../config/session");
 
-function decrypt(data) {
-  const [ivHex, encrypted] = data.split(":");
+const ALGORITHM = "aes-256-cbc";
 
-  const decipher = crypto.createDecipheriv(
-    ALGORITHM,
-    SECRET_KEY,
-    Buffer.from(ivHex, "hex"),
-  );
+function decrypt(cipherText) {
+  const key = getSessionKey();
+
+  if (!key) throw new Error("Vault is locked.");
+
+  const parts = cipherText.split(":");
+
+  const iv = Buffer.from(parts[0], "hex");
+
+  const encrypted = parts[1];
+
+  const decipher = crypto.createDecipheriv(ALGORITHM, key, iv);
 
   let decrypted = decipher.update(encrypted, "hex", "utf8");
 

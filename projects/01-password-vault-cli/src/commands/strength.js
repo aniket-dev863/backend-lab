@@ -1,8 +1,10 @@
 const vaultService = require("../services/vaultService");
 const { ask, close } = require("../utils/prompt");
+const unlockVault = require("../utils/unlockVault");
 
 async function checkStrength() {
   try {
+    await unlockVault();
     let password = process.argv[3];
     if (!password) {
       password = await ask("Provide Password :");

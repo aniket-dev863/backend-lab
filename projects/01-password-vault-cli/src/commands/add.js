@@ -1,14 +1,15 @@
 const vaultService = require("../services/vaultService");
 const { ask, close } = require("../utils/prompt");
-
+const unlockVault = require("../utils/unlockVault");
 async function add() {
-  console.log("\n=== Add New Credential ===\n");
-
-  const website = await ask("Website : ");
-  const username = await ask("Username : ");
-  const password = await ask("Password : ");
-
   try {
+    await unlockVault();
+    console.log("\n=== Add New Credential ===\n");
+
+    const website = await ask("Website : ");
+    const username = await ask("Username : ");
+    const password = await ask("Password : ");
+
     const result = vaultService.addCredentials({
       website,
       username,

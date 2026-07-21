@@ -1,8 +1,9 @@
 const vaultService = require("../services/vaultService");
 const { ask, close } = require("../utils/prompt");
-
+const unlockVault = require("../utils/unlockVault");
 async function deleteCredential() {
   try {
+    await unlockVault();
     const website = await ask("Website: ");
     const credential = vaultService.getCredentials(website);
     console.log("Website: ", credential.website);

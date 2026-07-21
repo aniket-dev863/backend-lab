@@ -4,6 +4,60 @@ const encrypt = require("../crypto/encrypt");
 const decrypt = require("../crypto/decrypt");
 const crypto = require("crypto");
 
+const {
+  generateSalt,
+  deriveKey,
+  createVerificationHash,
+  ITERATIONS,
+} = require("../crypto/masterPassword");
+
+const { saveMasterConfig } = require("../database/masterRepository");
+
+const { setSessionKey } = require("../config/session");
+
+const { loadMasterConfig } = require("../database/masterRepository");
+
+function unlockVault(password) {
+  const config = loadMasterConfig();
+
+  if (!config) throw new Error("Vault has not been initialized.");
+
+  const key = deriveKey(password, config.salt);
+
+  const hash = createVerificationHash(key);
+
+  if (hash !== config.verificationHash) {
+    throw new Error("Incorrect Master Password.");
+  }
+
+  setSessionKey(key);
+
+  return {
+    success: true,
+  };
+}
+
+function setupMasterPassword(password) {
+  const salt = generateSalt();
+
+  const key = deriveKey(password, salt);
+
+  const verificationHash = createVerificationHash(key);
+
+  saveMasterConfig({
+    salt,
+
+    iterations: ITERATIONS,
+
+    verificationHash,
+  });
+
+  setSessionKey(key);
+
+  return {
+    success: true,
+  };
+}
 function addCredentials({ website, username, password }) {
   if (!website || !username || !password) {
     throw new Error("All feilds are required ");
@@ -108,4 +162,6 @@ module.exports = {
   updateCredentials,
   generatePassword,
   checkStrength,
+  unlockVault,
+  setupMasterPassword,
 };

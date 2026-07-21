@@ -1,7 +1,10 @@
 const vaultService = require("../services/vaultService");
 const { ask, close } = require("../utils/prompt");
-function listAll() {
+const unlockVault = require("../utils/unlockVault");
+
+async function listAll() {
   try {
+    await unlockVault();
     const result = vaultService.getAllCredential();
     if (result.length === 0) {
       console.log(`No Websites Found `);
